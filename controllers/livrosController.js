@@ -1,4 +1,5 @@
 
+const Livro = require("../models/Livro");
 const livro = require("../models/Livro"); 
 
 // GET 
@@ -11,17 +12,17 @@ exports.getAllLivros = async (req, res) =>{
     }
 }; 
 // GET 
+/*
 exports.getLivroByName = async (req,res) =>{
     try{
-        const livros = await livro.findOne(req.params.nameLivro); 
-        if (!livros) {
-            return res.status(404).json({message: 'Livro não encontrado'}); 
-        }
-        res.json(this.getLivroByName); 
+       const livro = await Livro.findOne({nameLivro:req.params.nameLivro})
+        res.json(livro)
         }catch(error){
             return res.status(500).json({message:error.message});
         }
 }; 
+*/
+
 
 // POST
 // status 201 = created 
@@ -38,22 +39,34 @@ exports.createLivro = async(req,res) =>{
 };
 
 // PUT
-exports.updateLivro = async(req,res) =>{
-    try{
-        const { nameLivro } = req.params;
-        const updateLivro = await livro.findOneAndUpdate({ name: nameLivro }, req.body, {new:true});
-        res.json(updateLivro); 
-    } catch(error){
-        res.status(400).json({message:error.message}); 
-    }
-  
-}; 
 
+exports.updateLivro = async (req, res) => {
+    try {
+      const livroID = req.params.id;  // definindo que o id vai ser recebido como parametro
+      const { nameLivro } = req.body; // recebendo novo nome do livro 
+      
+      const livroAtualizado = await livro.findByIdAndUpdate(
+        livroID, 
+        { nameLivro }, 
+        { new: true } // retornando o novo valor
+      );
+      
+      if (!livroAtualizado) {
+        return res.status(404).json({ message: 'Livro não encontrado' });
+      }
+      
+      res.json({ message: 'Livro atualizado', livro: livroAtualizado });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  };
+  
 // DELETE 
 exports.deleteLivro = async(req,res) =>{
     try{
-        const deleteLivro = await livro.deleteOne({ name: nameLivro }); ; 
-        res.json({message: 'Livro excluído'});
+        const livroID = req.params.id; 
+        const livroDeletado = await livro.findByIdAndDelete(livroID); 
+        res.status(200).json({message:`Livro ${livroDeletado} excluído`});
     }catch(error){
         res.status(500).json({message:error.message});
     }
