@@ -1,6 +1,4 @@
-const userName = document.querySelector('#userName').value;
-const email = document.querySelector('#email').value; 
-const password = document.querySelector('#password').value; 
+
 const botao = document.querySelector('#botao'); 
 const form = document.querySelector('#register-form');
 botao.addEventListener('click', clicou); 
@@ -8,12 +6,19 @@ botao.addEventListener('click', clicou);
 async function clicou (){
 
     try {
+        const userName = document.querySelector('#userName').value;
+        const email = document.querySelector('#email').value; 
+        const password = document.querySelector('#password').value;     
+
+       console.log({ userName, email, password }); // Verifica os valores capturados
         const response = await fetch('http://127.0.0.1:3000/api/auth/register', { // Certifique-se de que a rota da API está correta
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
+            
             body: JSON.stringify({ userName, email, password })
+            
         });
     
         if (response.ok) {
@@ -28,4 +33,3 @@ async function clicou (){
     
 }; 
 
-clicou();
