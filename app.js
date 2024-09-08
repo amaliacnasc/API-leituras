@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const bcrypt = require('bcrypt');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 require('dotenv').config(); 
 
@@ -46,6 +48,32 @@ app.use('/api/usuarios', usuariosRoute );
 app.use('/api/auth', authRoute);
 
 
+// Configuração do Swagger
+const options = {
+    definition: {
+      openapi: "3.0.0",  // Atualizado para OpenAPI 3.0.0 para melhor compatibilidade
+      info: {
+        title: "API - Biblioteca de Leituras",
+        version: "1.0.0",
+        description:
+          "Esta é uma API que tem por objetivo registrar leituras dos usuários. Foram utilizadas JS, Express, NodeJS , MongoDB e Mongoose como principais tecnologias.",
+        contact: {
+          name: "Amalia Nascimento",
+          url: "https://github.com/amaliacnasc",
+          email: "amaliacnasc@gmail.com",
+        },
+      },
+      servers: [
+        {
+          url: "http://localhost:3000/",
+        },
+      ],
+    },
+    apis: ["./routes/*.js"] // Caminho para as rotas com documentação Swagger
+  };
+  const swaggerDocs = swaggerJsDoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+  
 app.use(express.urlencoded())
 // PORTA
 const PORT = process.env.PORT || 3000; 
