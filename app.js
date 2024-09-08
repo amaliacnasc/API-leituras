@@ -21,7 +21,7 @@ app.use(express.static('public'));
 
 // conectando mongo 
 connectDB(); 
-// rotas
+
 
 // Middleware de segurança
 app.use(helmet());
@@ -45,6 +45,8 @@ app.use('/api/leituras', livrosRoute);
 app.use('/api/usuarios', usuariosRoute );
 app.use('/api/auth', authRoute);
 
+
+app.use(express.urlencoded())
 // PORTA
 const PORT = process.env.PORT || 3000; 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); 
