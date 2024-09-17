@@ -40,7 +40,7 @@ app.use(express.json());
 // Middleware para parsing de dados de formulários
 app.use(express.urlencoded({ extended: true }));
 
-const livrosRoute = require("../backend/routes/livrosRoute"); 
+const livrosRoute = require("./routes/livrosRoute"); 
 app.use('/api/leituras', livrosRoute); 
 
 
