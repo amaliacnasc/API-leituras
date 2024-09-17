@@ -1,5 +1,4 @@
 
-const Livro = require("../models/Livro");
 const livro = require("../models/Livro"); 
 
 // GET 
@@ -11,6 +10,20 @@ exports.getAllLivros = async (req, res) =>{
         res.status(500).json({message:error.message}); // 500 - internal server error 
     }
 }; 
+
+// GET 
+
+exports.getLivroById = async(req,res)=>{
+    try{
+        const livro = await livro.findById(req.params.id); 
+        if(!livro){
+            res.json({message:'Livro não encontrado'}); 
+        }
+        res.json(livro); 
+    }catch(error){
+        return res.status(500).json({message:error.message});
+    }
+}
 // GET 
 /*
 exports.getLivroByName = async (req,res) =>{

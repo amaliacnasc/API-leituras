@@ -21,7 +21,7 @@ const livrosController = require("../controllers/livrosController");
  *         description: Erro interno no servidor ao buscar os livros
  */
 router.get('/', livrosController.getAllLivros);
-
+router.get('/:id', livrosController.getLivroById); 
 /**
  * @swagger
  * /api/livros:
@@ -40,6 +40,48 @@ router.get('/', livrosController.getAllLivros);
  *       400:
  *         description: Erro na requisição, dados inválidos
  */
+/**
+ * @swagger
+ * /api/livros/{id}:
+ *   get:
+ *     summary: Retorna um livro pelo ID
+ *     tags: [Livros]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID do livro a ser buscado
+ *     responses:
+ *       200:
+ *         description: Livro encontrado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Livro'
+ *       404:
+ *         description: Livro não encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Livro não encontrado
+ *       500:
+ *         description: Erro no servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Erro no servidor
+ */
+
 router.post('/', livrosController.createLivro);
 
 /**

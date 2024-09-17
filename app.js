@@ -6,7 +6,7 @@ const connectDB = require('./database');
 const bodyParser = require('body-parser'); 
 const helmet = require('helmet');
 const morgan = require('morgan');
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -16,8 +16,8 @@ const app = express();
 
 // middleware
 app.use(cors()); 
-//app.use(bodyParser.json({limit:'50mb'})); 
-//app.use(bodyParser.urlencoded({limit:'50mb', extended:true})); 
+app.use(bodyParser.json({limit:'50mb'})); 
+app.use(bodyParser.urlencoded({limit:'50mb', extended:true})); 
 app.use(express.static('public')); 
 
 
@@ -41,11 +41,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const livrosRoute = require("../backend/routes/livrosRoute"); 
-const usuariosRoute = require("../backend/routes/usuariosRoute");
-const authRoute = require('../backend/routes/authRoute');
 app.use('/api/leituras', livrosRoute); 
-app.use('/api/usuarios', usuariosRoute );
-app.use('/api/auth', authRoute);
+
 
 
 // Configuração do Swagger
