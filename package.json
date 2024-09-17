@@ -4,7 +4,8 @@
   "description": "API para armazenar lista de leituras dos usuarios, com nome e foto do livro e resumo",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "start": "node app.js"
   },
   "author": "Amalia Nascimento",
   "license": "ISC",
